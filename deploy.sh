@@ -1,36 +1,21 @@
 #!/bin/bash
 set -e
 
-echo "==============================="
+echo "================================="
 echo "Deploy dimulai..."
-echo "==============================="
+echo "================================="
 
 cd /var/www/ceritakota
 
-echo "Pull repository..."
-git pull origin main
+git fetch origin
+git reset --hard origin/main
 
-echo "Install Laravel dependency..."
-cd backend
-composer install --no-interaction --prefer-dist --optimize-autoloader
+npm ci
 
-echo "Migrate database..."
-php artisan migrate --force
-
-echo "Optimize Laravel..."
-php artisan optimize
-
-cd ..
-
-echo "Install Node dependency..."
-npm install
-
-echo "Build Next.js..."
 npm run build
 
-echo "Restart PM2..."
-pm2 restart all
+pm2 restart ceritakota --update-env
 
-echo "==============================="
+echo "================================="
 echo "Deploy selesai!"
-echo "==============================="
+echo "================================="
