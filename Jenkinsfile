@@ -15,7 +15,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sshagent(['Production VPS SSH']) {
+                sshagent(['github-token']) {
                     sh '''
                         ssh root@103.152.119.18 "echo SSH OK"
                     '''
