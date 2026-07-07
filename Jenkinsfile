@@ -15,7 +15,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sshagent(['github-token']) {
+                sshagent(['tess']) {
                     sh '''
                         ssh root@103.152.119.18 "echo SSH OK"
                     '''
