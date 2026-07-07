@@ -49,35 +49,64 @@ pipeline {
 
     post {
 
-        success {
-            withCredentials([string(credentialsId: 'telegram-token', variable: 'BOT_TOKEN')]) {
-                sh '''
-                    curl -s -X POST https://api.telegram.org/bot$BOT_TOKEN/sendMessage \
-                    -d chat_id=8392806634 \
-                    --data-urlencode "text=✅ CeritaKota
+    success {
+        withCredentials([string(credentialsId: 'telegram-token', variable: 'BOT_TOKEN')]) {
+            sh """
+                SHORT_COMMIT=\$(git rev-parse --short HEAD)
+                COMMIT_MSG="\$(git log -1 --pretty=%s)"
+                AUTHOR="\$(git log -1 --pretty=%an)"
 
-Deploy BERHASIL
+                curl -s -X POST https://api.telegram.org/bot\$BOT_TOKEN/sendMessage \
+                -d chat_id=8392806634 \
+                --data-urlencode "text=🚀 CeritaKota Deployment
 
-Build #${BUILD_NUMBER}
+✅ Status : SUCCESS
+🌿 Branch : ${env.BRANCH_NAME ?: 'main'}
+🔢 Build : #${env.BUILD_NUMBER}
+👤 Author : \$AUTHOR
+📝 Commit : \$COMMIT_MSG
+🔖 Hash : \$SHORT_COMMIT
 
-Commit:
-${GIT_COMMIT}"
-                '''
-            }
+🌐 Website
+https://ceritakota.id
+
+🖥 Jenkins
+${env.BUILD_URL}"
+            """
         }
+    }
 
-        failure {
-            withCredentials([string(credentialsId: 'telegram-token', variable: 'BOT_TOKEN')]) {
-                sh '''
-                    curl -s -X POST https://api.telegram.org/bot$BOT_TOKEN/sendMessage \
-                    -d chat_id=8392806634 \
-                    --data-urlencode "text=❌ CeritaKota
+    failure {
+        withCredentials([string(credentialsId: 'telegram-token', variable: 'BOT_TOKEN')]) {
+            sh """
+                SHORT_COMMIT=\$(git rev-parse --short HEAD)
+                COMMIT_MSG="\$(git log -1 --pretty=%s)"
+                AUTHOR="\$(git log -1 --pretty=%an)"
 
-Deploy GAGAL
+                curl -s -X POST https://api.telegram.org/bot\$BOT_TOKEN/sendMessage \
+                -d chat_id=8392806634 \
+                --data-urlencode "text=❌ CeritaKota Deployment
 
-Build #${BUILD_NUMBER}"
-                '''
-            }
+Status : FAILED
+🌿 Branch : ${env.BRANCH_NAME ?: 'main'}
+🔢 Build : #${env.BUILD_NUMBER}
+👤 Author : \$AUTHOR
+📝 Commit : \$COMMIT_MSG
+🔖 Hash : \$SHORT_COMMIT
+
+🖥 Jenkins
+${env.BUILD_URL}"
+            """
+        }
+    }
+
+    unstable {
+        withCredentials([string(credentialsId: 'telegram-token', variable: 'BOT_TOKEN')]) {
+            sh """
+                curl -s -X POST https://api.telegram.org/bot\$BOT_TOKEN/sendMessage \
+                -d chat_id=8392806634 \
+                --data-urlencode "text=⚠️ Build #${env.BUILD_NUMBER} selesai tetapi status UNSTABLE."
+            """
         }
     }
 }
