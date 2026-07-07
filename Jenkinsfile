@@ -46,4 +46,38 @@ pipeline {
             }
         }
     }
+
+    post {
+
+        success {
+            withCredentials([string(credentialsId: 'telegram-token', variable: 'BOT_TOKEN')]) {
+                sh '''
+                    curl -s -X POST https://api.telegram.org/bot$BOT_TOKEN/sendMessage \
+                    -d chat_id=8392806634 \
+                    --data-urlencode "text=✅ CeritaKota
+
+Deploy BERHASIL
+
+Build #${BUILD_NUMBER}
+
+Commit:
+${GIT_COMMIT}"
+                '''
+            }
+        }
+
+        failure {
+            withCredentials([string(credentialsId: 'telegram-token', variable: 'BOT_TOKEN')]) {
+                sh '''
+                    curl -s -X POST https://api.telegram.org/bot$BOT_TOKEN/sendMessage \
+                    -d chat_id=8392806634 \
+                    --data-urlencode "text=❌ CeritaKota
+
+Deploy GAGAL
+
+Build #${BUILD_NUMBER}"
+                '''
+            }
+        }
+    }
 }
