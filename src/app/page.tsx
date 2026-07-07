@@ -20,7 +20,7 @@ export default function HomePage() {
       {/* Footer sederhana */}
       <footer className="absolute bottom-4 left-0 w-full z-10 text-center pointer-events-none">
         <p className="text-sm font-medium text-slate-400">
-          © 2026 Digital Indonesia. Dibuat dengan ❤️ untuk Nusantara.
+          © 2026 Digital Indonesia. Dibuat dengan ❤️ untuk CeritaKota.
         </p>
       </footer>
     </main>
