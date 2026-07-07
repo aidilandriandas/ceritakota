@@ -1,10 +1,18 @@
 pipeline {
     agent any
 
+    environment {
+        SERVER = "103.152.119.18"
+    }
+
     stages {
-        stage('Hello') {
+        stage('Deploy') {
             steps {
-                echo 'Jenkins berhasil!'
+                sshagent(credentials: ['production-server']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no root@${SERVER} 'bash /var/www/ceritakota/deploy.sh'
+                    """
+                }
             }
         }
     }

@@ -69,9 +69,9 @@ export default function IndonesiaMap() {
     <section id="jelajah" className="relative w-full h-screen flex flex-col items-center justify-center pt-16 px-4">
       {/* Background motif batik/elegan (opsional, saat ini polos krem) */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        className="absolute inset-0 pointer-events-none opacity-[0.02]"
         style={{
-          backgroundImage: "radial-gradient(#C15B3D 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(#60A5FA 1px, transparent 1px)",
           backgroundSize: "20px 20px"
         }}
       />
@@ -83,10 +83,10 @@ export default function IndonesiaMap() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="absolute top-28 z-10 text-center pointer-events-none"
       >
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-2 text-[#2C1E16] drop-shadow-sm">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-2 text-white drop-shadow-lg">
           Pilih Provinsi Anda
         </h1>
-        <p className="text-[#2C1E16]/70 text-lg font-medium">
+        <p className="text-slate-300 text-lg font-medium">
           Jelajahi keindahan budaya dan sejarah di seluruh penjuru Nusantara.
         </p>
       </motion.div>
@@ -98,11 +98,11 @@ export default function IndonesiaMap() {
           animate={{ opacity: 1, y: 0 }}
           className="fixed top-24 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 rounded-xl text-sm font-bold pointer-events-none"
           style={{
-            background: "rgba(255, 255, 255, 0.95)",
-            border: "1px solid rgba(193, 91, 61, 0.2)",
-            color: "#A43820",
+            background: "rgba(30, 41, 59, 0.95)",
+            border: "1px solid rgba(59, 130, 246, 0.4)",
+            color: "#60A5FA",
             backdropFilter: "blur(10px)",
-            boxShadow: "0 10px 25px rgba(44, 30, 22, 0.1)",
+            boxShadow: "0 10px 25px rgba(59, 130, 246, 0.2)",
           }}
         >
           {hoveredProvince}
@@ -144,16 +144,16 @@ export default function IndonesiaMap() {
                 style={{
                   fill: hasData
                     ? isHovered
-                      ? "#A43820" // Terakota gelap saat dihover
-                      : "#C15B3D" // Terakota terang untuk provinsi aktif
+                      ? "#1E40AF" // Biru gelap saat dihover
+                      : "#3B82F6" // Biru cerah untuk provinsi aktif
                     : isHovered
-                    ? "#D5CBB8" // Krem agak gelap saat inactive dihover
-                    : "#EAE6DB", // Warna daratan untuk provinsi inactive (lebih gelap dari bg)
+                    ? "#475569" // Slate agak terang saat inactive dihover
+                    : "#334155", // Warna daratan untuk provinsi inactive (slate gelap)
                   stroke: hasData
                     ? isHovered
-                      ? "#ffffff"
-                      : "rgba(255, 255, 255, 0.5)" // Garis putih transparan untuk yang aktif
-                    : "rgba(44, 30, 22, 0.15)", // Garis tepi samar untuk inactive
+                      ? "#60A5FA"
+                      : "rgba(96, 165, 250, 0.4)" // Garis biru transparan untuk yang aktif
+                    : "rgba(148, 163, 184, 0.2)", // Garis tepi samar untuk inactive
                   strokeWidth: isHovered ? 1.5 : 0.8,
                   transition: "all 0.3s ease",
                 }}
