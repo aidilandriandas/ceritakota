@@ -1,8 +1,31 @@
 pipeline {
     agent any
 
+    environment {
+        VPS = "103.152.119.18"
+    }
+
     stages {
-        stage('Deploy') {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+
+        stage('Build Test') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+
+        stage('Deploy to VPS') {
             steps {
                 withCredentials([
                     sshUserPrivateKey(
@@ -14,11 +37,10 @@ pipeline {
                     sh '''
                         chmod 600 "$SSH_KEY"
 
-                        ssh \
-                            -i "$SSH_KEY" \
-                            -o StrictHostKeyChecking=no \
-                            ${SSH_USER}@103.152.119.18 \
-                            "bash /var/www/ceritakota/deploy.sh"
+                        ssh -i "$SSH_KEY" \
+                        -o StrictHostKeyChecking=no \
+                        ${SSH_USER}@${VPS} \
+                        "bash /var/www/ceritakota/deploy.sh"
                     '''
                 }
             }
