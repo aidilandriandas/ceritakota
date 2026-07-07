@@ -84,7 +84,7 @@ export default function IndonesiaMap() {
         className="absolute top-28 z-10 text-center pointer-events-none"
       >
         <h1 className="text-4xl md:text-6xl font-extrabold mb-2 text-white drop-shadow-lg">
-          Aidil Andriandas
+          Pilih Provinsi Anda
         </h1>
         <p className="text-slate-300 text-lg font-medium">
           Jelajahi keindahan budaya dan sejarah di seluruh penjuru Nusantara.
