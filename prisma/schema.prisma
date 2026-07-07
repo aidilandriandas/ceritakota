@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model City {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  province    String
+  geoName     String
+  tagline     String
+  description String
+  image       String?
+  coordinates String   // JSON stringified array e.g. "[100.6334, -0.2159]"
+  scale       Int      @default(3000)
+
+  // Meta
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relasi
+  categories  CategoryItem[]
+}
+
+model CategoryItem {
+  id          String   @id @default(cuid())
+  type        String   // SEJARAH, WISATA, BUDAYA, KULINER, TEKNOLOGI
+  name        String
+  description String
+  image       String?
+
+  cityId      String
+  city        City     @relation(fields: [cityId], references: [id], onDelete: Cascade)
+
+  // Meta
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([cityId])
+}
