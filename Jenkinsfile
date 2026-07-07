@@ -5,7 +5,7 @@ pipeline {
 
         stage('Test SSH Key') {
             steps {
-                sshagent(['Production VPS SSH']) {
+                sshagent(['tess']) {
                     sh '''
                         ssh-add -l
                     '''
